@@ -1,0 +1,17 @@
+# Foldery z plikami kompilacji
+bin/
+obj/
+
+# Ustawienia lokalne Visual Studio i edytora
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosv
+*.userprefs
+node_modules
+
+# Pliki tymczasowe i logi
+*.log
+[Dd]ebug/
+[Rr]elease/
