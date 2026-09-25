@@ -10,13 +10,27 @@ import './App.css'
 
 function App() {
   const [listaZdjec, setListaZdjec] = useState(photoData)
+  const [wybranaKategoria, setWybranaKategoria] = useState('wszystkie')
+
+  const przefiltrowaneZdjecia =
+    wybranaKategoria === 'wszystkie'
+      ? listaZdjec
+      : listaZdjec.filter(item => item.category === wybranaKategoria)
 
   return (
     <>
       <Navbar />
       <main className="container my-4">
-        <CategoryBar />
-        <Gallery zdjecia={listaZdjec} />
+        <CategoryBar
+          aktywna={wybranaKategoria}
+          onWybierz={setWybranaKategoria}
+        />
+        {przefiltrowaneZdjecia.length === 0 && (
+          <div className="alert alert-warning my-3" role="alert">
+            Brak zdjęć w wybranej kategorii.
+          </div>
+        )}
+        <Gallery zdjecia={przefiltrowaneZdjecia} />
       </main>
       <AddPhotoModal />
       <FiltersOffcanvas />

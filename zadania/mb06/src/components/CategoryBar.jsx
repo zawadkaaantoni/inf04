@@ -1,21 +1,29 @@
-function CategoryBar() {
-  const categoriesList = [
-    { label: 'Wszystkie', active: true },
-    { label: 'Góry', active: false },
-    { label: 'Morze', active: false },
-    { label: 'Miasto', active: false },
-  ]
+const KATEGORIE_LISTA = [
+  { value: 'gory', label: 'Góry' },
+  { value: 'morze', label: 'Morze' },
+  { value: 'miasto', label: 'Miasto' },
+]
 
+function CategoryBar({ aktywna, onWybierz }) {
   return (
     <div id="kategorie" className="d-flex flex-wrap gap-2 mb-4">
-      {categoriesList.map((item, index) => (
+      <button
+        type="button"
+        className={`btn btn-outline-primary ${aktywna === 'wszystkie' ? 'active' : ''}`}
+        aria-pressed={aktywna === 'wszystkie'}
+        onClick={() => onWybierz('wszystkie')}
+      >
+        Wszystkie
+      </button>
+      {KATEGORIE_LISTA.map(kat => (
         <button
-          key={index}
+          key={kat.value}
           type="button"
-          className={`btn ${item.active ? 'btn-primary' : 'btn-outline-primary'}`}
-          aria-pressed={item.active}
+          className={`btn btn-outline-primary ${aktywna === kat.value ? 'active' : ''}`}
+          aria-pressed={aktywna === kat.value}
+          onClick={() => onWybierz(kat.value)}
         >
-          {item.label}
+          {kat.label}
         </button>
       ))}
     </div>
