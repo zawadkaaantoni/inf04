@@ -4,7 +4,7 @@ const CATEGORY_MAP = {
   miasto: { label: 'Miasto', badgeClass: 'text-bg-dark' },
 }
 
-function PhotoCard({ title, description, category, image, alt }) {
+function PhotoCard({ id, title, description, category, image, alt }) {
   const categoryInfo = CATEGORY_MAP[category] || { label: category, badgeClass: 'text-bg-secondary' }
 
   return (
@@ -18,6 +18,14 @@ function PhotoCard({ title, description, category, image, alt }) {
           </span>
         </p>
         <p className="card-text text-body-secondary">{description}</p>
+        <button
+          type="button"
+          className="btn btn-outline-primary mt-auto"
+          data-bs-toggle="modal"
+          data-bs-target={`#zdjecie${id}`}
+        >
+          Powiększ
+        </button>
       </div>
     </div>
   )
