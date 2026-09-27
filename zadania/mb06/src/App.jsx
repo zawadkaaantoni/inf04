@@ -17,6 +17,10 @@ function App() {
       ? listaZdjec
       : listaZdjec.filter(item => item.category === wybranaKategoria)
 
+  const obslugaUsun = targetId => {
+    setListaZdjec(prev => prev.filter(item => item.id !== targetId))
+  }
+
   return (
     <>
       <Navbar />
@@ -30,7 +34,7 @@ function App() {
             Brak zdjęć w wybranej kategorii.
           </div>
         )}
-        <Gallery zdjecia={przefiltrowaneZdjecia} />
+        <Gallery zdjecia={przefiltrowaneZdjecia} onUsun={obslugaUsun} />
       </main>
       <AddPhotoModal />
       <FiltersOffcanvas
