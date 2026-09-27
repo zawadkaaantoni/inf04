@@ -21,6 +21,14 @@ function App() {
     setListaZdjec(prev => prev.filter(item => item.id !== targetId))
   }
 
+  const obslugaDodaj = nowoDodane => {
+    const nextId = Math.max(...listaZdjec.map(item => item.id), 0) + 1
+    setListaZdjec(prev => [
+      ...prev,
+      { ...nowoDodane, id: nextId, favorite: false },
+    ])
+  }
+
   return (
     <>
       <Navbar />
@@ -36,7 +44,7 @@ function App() {
         )}
         <Gallery zdjecia={przefiltrowaneZdjecia} onUsun={obslugaUsun} />
       </main>
-      <AddPhotoModal />
+      <AddPhotoModal onDodaj={obslugaDodaj} />
       <FiltersOffcanvas
         aktywna={wybranaKategoria}
         onWybierz={setWybranaKategoria}
