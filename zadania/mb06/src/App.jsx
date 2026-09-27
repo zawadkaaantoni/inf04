@@ -33,7 +33,10 @@ function App() {
         <Gallery zdjecia={przefiltrowaneZdjecia} />
       </main>
       <AddPhotoModal />
-      <FiltersOffcanvas />
+      <FiltersOffcanvas
+        aktywna={wybranaKategoria}
+        onWybierz={setWybranaKategoria}
+      />
       <Footer />
     </>
   )

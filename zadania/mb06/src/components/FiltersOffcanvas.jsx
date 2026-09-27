@@ -1,9 +1,13 @@
-function FiltersOffcanvas() {
-  const filterCategories = [
-    { id: 'filtrGory', label: 'Góry' },
-    { id: 'filtrMorze', label: 'Morze' },
-    { id: 'filtrMiasto', label: 'Miasto' },
-  ]
+const KATEGORIE_LISTA = [
+  { value: 'gory', label: 'Góry' },
+  { value: 'morze', label: 'Morze' },
+  { value: 'miasto', label: 'Miasto' },
+]
+
+function FiltersOffcanvas({ aktywna, onWybierz }) {
+  const PrzelaczKategorie = kategoria => {
+    onWybierz(aktywna === kategoria ? 'wszystkie' : kategoria)
+  }
 
   return (
     <div
@@ -24,17 +28,18 @@ function FiltersOffcanvas() {
         ></button>
       </div>
       <div className="offcanvas-body">
-        <p className="text-body-secondary">Zaznacz kategorie, które chcesz zobaczyć:</p>
-        {filterCategories.map(item => (
-          <div key={item.id} className="form-check">
+        <p className="text-body-secondary">Wybierz kategorię do wyświetlenia:</p>
+        {KATEGORIE_LISTA.map(kat => (
+          <div className="form-check" key={kat.value}>
             <input
               className="form-check-input"
               type="checkbox"
-              id={item.id}
-              defaultChecked
+              id={`filtr-${kat.value}`}
+              checked={aktywna === kat.value}
+              onChange={() => PrzelaczKategorie(kat.value)}
             />
-            <label className="form-check-label" htmlFor={item.id}>
-              {item.label}
+            <label className="form-check-label" htmlFor={`filtr-${kat.value}`}>
+              {kat.label}
             </label>
           </div>
         ))}
