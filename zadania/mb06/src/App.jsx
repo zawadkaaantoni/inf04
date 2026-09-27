@@ -37,8 +37,11 @@ function App() {
           aktywna={wybranaKategoria}
           onWybierz={setWybranaKategoria}
         />
+        <p className="text-muted fw-bold mb-3">
+          Wyświetlono {przefiltrowaneZdjecia.length} z {listaZdjec.length} zdjęć
+        </p>
         {przefiltrowaneZdjecia.length === 0 && (
-          <div className="alert alert-warning my-3" role="alert">
+          <div className="alert alert-warning my-3">
             Brak zdjęć w wybranej kategorii.
           </div>
         )}
