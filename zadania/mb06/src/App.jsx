@@ -29,6 +29,14 @@ function App() {
     ])
   }
 
+  const obslugaUlubione = targetId => {
+    setListaZdjec(prev =>
+      prev.map(item =>
+        item.id === targetId ? { ...item, favorite: !item.favorite } : item
+      )
+    )
+  }
+
   return (
     <>
       <Navbar />
@@ -45,7 +53,7 @@ function App() {
             Brak zdjęć w wybranej kategorii.
           </div>
         )}
-        <Gallery zdjecia={przefiltrowaneZdjecia} onUsun={obslugaUsun} />
+        <Gallery zdjecia={przefiltrowaneZdjecia} onUsun={obslugaUsun} onPrzelaczUlubione={obslugaUlubione}/>
       </main>
       <AddPhotoModal onDodaj={obslugaDodaj} />
       <FiltersOffcanvas
