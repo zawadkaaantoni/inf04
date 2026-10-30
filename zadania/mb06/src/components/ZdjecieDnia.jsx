@@ -11,31 +11,40 @@ function ZdjecieDnia() {
   const [blad, setBlad] = useState(null)
 
   useEffect(() => {
-    const pobierzDane = async () => {
-      setCzyLaduje(true)
+  const pobierzDane = async () => {
+    setCzyLaduje(true)
 
-      try {
-        const res = await fetch(`https://picsum.photos/id/${numer}/info`)
+    try {
+      const res = await fetch(`https://picsum.photos/id/${numer}/info`)
 
-        if (!res.ok) {
-          throw new Error(`Błąd serwera: ${res.status}`)
-        }
-
-        const dane = await res.json()
-        setDaneZdjecia(dane)
-      } catch (err) {
-        setBlad(err.message)
-      } finally {
-        setCzyLaduje(false)
+      if (!res.ok) {
+        throw new Error(`Błąd serwera: ${res.status}`)
       }
-    }
 
-    pobierzDane()
-  }, [numer])
+      const dane = await res.json()
+
+      setDaneZdjecia(dane)
+      setBlad(null)
+    } catch (err) {
+      setBlad(err.message)
+      setDaneZdjecia(null)
+    } finally {
+      setCzyLaduje(false)
+    }
+  }
+
+  pobierzDane()
+}, [numer])
 
   return (
   <section className="container my-5">
     <h2 className="mb-3">Zdjęcie dnia</h2>
+
+    {blad && (
+        <div className="alert alert-danger">
+            Błąd: {blad}
+        </div>
+    )}
 
     {daneZdjecia && (
       <div>
