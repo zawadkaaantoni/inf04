@@ -12,6 +12,15 @@ function App() {
   const osobaRef = useRef(null)
   const kursRef = useRef(null)
 
+  const [fraza, setFraza] = useState('')
+
+  const wyniki = listaKursow.map((nazwa, i) => ({
+    nazwa: nazwa,
+    id: i + 1
+    })).filter((element) =>
+    element.nazwa.toLowerCase().includes(fraza.toLowerCase()))
+
+
   const zapiszNaKurs = (e) => {
     e.preventDefault()
 
@@ -36,9 +45,11 @@ function App() {
         Liczba kursów: {listaKursow.length}
       </h2>
 
+      <input type="text" className="form-control mb-2" placeholder="Szukaj kursu..." value={fraza} onChange={(e) => setFraza(e.target.value)}/>
+
       <ol>
-        {listaKursow.map((nazwa, i) => (
-          <li key={i}>{nazwa}</li>
+        {wyniki.map((element) => (
+          <li key={element.id} value={element.id}>{element.nazwa}</li>
         ))}
       </ol>
 
