@@ -14,6 +14,7 @@ function App() {
 
   const [fraza, setFraza] = useState('')
   const [sortAZ, setSortAZ] = useState(true)
+  const [komunikat, setKomunikat] = useState(null)
 
   const wyniki = listaKursow.map((nazwa, i) => ({
     nazwa: nazwa,
@@ -38,9 +39,13 @@ function App() {
     console.log(osoba)
 
     if (wybranyKurs === undefined) {
-      console.log('Nieprawidłowy numer kursu')
+      console.log('nieprawidlowy numer kursu')
+
+      setKomunikat({poprawny: false,tekst: 'nieprawidlowy numer kursu'})
     } else {
       console.log(wybranyKurs)
+
+      setKomunikat({poprawny: true, tekst: `${osoba} zapisany(-a) na kurs: ${wybranyKurs}`})
     }
   }
 
@@ -68,6 +73,12 @@ function App() {
           <li key={element.id} value={element.id}>{element.nazwa}</li>
         ))}
       </ol>
+
+      {komunikat && (
+        <div className={`alert ${komunikat.poprawny ? 'alert-success' : 'alert-danger'}`}>
+        {komunikat.tekst}
+      </div>
+)}
 
       <form onSubmit={zapiszNaKurs}>
         <div className="mb-3">
