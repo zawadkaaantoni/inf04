@@ -33,7 +33,34 @@ function ZdjecieDnia() {
     pobierzDane()
   }, [numer])
 
-  return <p>Zdjęcie dnia - tutaj pojawi się zdjęcie</p>
+  return (
+  <section className="container my-5">
+    <h2 className="mb-3">Zdjęcie dnia</h2>
+
+    {daneZdjecia && (
+      <div>
+        <img
+          src={`https://picsum.photos/id/${numer}/400/250`}
+          className="img-fluid rounded"
+          alt={daneZdjecia.author}
+        />
+
+        <p className="text-muted mt-2">
+          Autor: {daneZdjecia.author}
+        </p>
+      </div>
+    )}
+
+    <button
+      type="button"
+      className="btn btn-outline-primary"
+      disabled={czyLaduje}
+      onClick={() => setNumer(generujId())}
+    >
+      {czyLaduje ? 'Losuję...' : 'Losuj nowe zdjęcie'}
+    </button>
+  </section>
+)
 }
 
 export default ZdjecieDnia
