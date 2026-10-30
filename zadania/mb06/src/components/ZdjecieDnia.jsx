@@ -36,6 +36,16 @@ function ZdjecieDnia() {
   pobierzDane()
 }, [numer])
 
+    const losujNowe = () => {
+    let noweId = generujId()
+
+    while (noweId === numer) {
+        noweId = generujId()
+    }
+
+    setNumer(noweId)
+    }
+
   return (
   <section className="container my-5">
     <h2 className="mb-3">Zdjęcie dnia</h2>
@@ -64,7 +74,7 @@ function ZdjecieDnia() {
       type="button"
       className="btn btn-outline-primary"
       disabled={czyLaduje}
-      onClick={() => setNumer(generujId())}
+      onClick={losujNowe}
     >
       {czyLaduje ? 'Losuję...' : 'Losuj nowe zdjęcie'}
     </button>
