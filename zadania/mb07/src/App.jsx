@@ -13,12 +13,19 @@ function App() {
   const kursRef = useRef(null)
 
   const [fraza, setFraza] = useState('')
+  const [sortAZ, setSortAZ] = useState(true)
 
   const wyniki = listaKursow.map((nazwa, i) => ({
     nazwa: nazwa,
     id: i + 1
-    })).filter((element) =>
-    element.nazwa.toLowerCase().includes(fraza.toLowerCase()))
+  })).filter((element) =>
+    element.nazwa.toLowerCase().includes(fraza.toLowerCase())
+  ).sort((a, b) => {
+    if (sortAZ) {
+      return a.nazwa.localeCompare(b.nazwa)
+    }
+    return b.nazwa.localeCompare(a.nazwa)
+  })
 
 
   const zapiszNaKurs = (e) => {
@@ -45,7 +52,13 @@ function App() {
         Liczba kursów: {listaKursow.length}
       </h2>
 
-      <input type="text" className="form-control mb-2" placeholder="Szukaj kursu..." value={fraza} onChange={(e) => setFraza(e.target.value)}/>
+    <div className="d-flex gap-2 mb-2">
+      <input type="text" className="form-control" placeholder="Szukaj kursu..." value={fraza} onChange={(e) => setFraza(e.target.value)} />
+
+      <button type="button" className="btn btn-outline-secondary text-nowrap" onClick={() => setSortAZ(!sortAZ)}>
+        Sortuj {sortAZ ? 'Z-A' : 'A-Z'}
+      </button>
+  </div>
 
       <ol>
         {wyniki.map((element) => (
