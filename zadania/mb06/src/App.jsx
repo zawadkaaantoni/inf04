@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar.jsx'
 import CategoryBar from './components/CategoryBar.jsx'
 import Gallery from './components/Gallery.jsx'
@@ -10,6 +10,25 @@ import './App.css'
 function App() {
   const [zdjecia, setZdjecia] = useState([])
   const [wybranaKategoria, setWybranaKategoria] = useState('wszystkie')
+
+  useEffect(() => {
+  const wczytajGalerie = async () => {
+    try {
+      const res = await fetch('/photos.json')
+
+      if (!res.ok) {
+        throw new Error(`Błąd pobierania: ${res.status}`)
+      }
+
+      const lista = await res.json()
+      setZdjecia(lista)
+    } catch (blad) {
+      console.error(blad.message)
+    }
+  }
+
+  wczytajGalerie()
+}, [])
 
   const przefiltrowaneZdjecia =
     wybranaKategoria === 'wszystkie'
