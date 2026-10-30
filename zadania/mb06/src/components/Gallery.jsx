@@ -1,3 +1,7 @@
+import { Fragment } from 'react'
+import PhotoCard from './PhotoCard.jsx'
+import PhotoModal from './PhotoModal.jsx'
+
 function Gallery({ zdjecia, onUsun, onPrzelaczUlubione }) {
   return (
     <div id="galeria" className="row g-4">

@@ -8,8 +8,10 @@ import Footer from './components/Footer.jsx'
 import './App.css'
 
 function App() {
-  const [zdjecia, setZdjecia] = useState([])
+  const [listaZdjec, setZdjecia] = useState([])
   const [wybranaKategoria, setWybranaKategoria] = useState('wszystkie')
+  const [ladowanie, setLadowanie] = useState(true)
+  const [bladDanych, setBladDanych] = useState(null)
 
   useEffect(() => {
   const wczytajGalerie = async () => {
@@ -22,13 +24,16 @@ function App() {
 
       const lista = await res.json()
       setZdjecia(lista)
+      setBladDanych(null)
     } catch (blad) {
-      console.error(blad.message)
+      setBladDanych(blad.message)
+    } finally {
+      setLadowanie(false)
     }
   }
 
   wczytajGalerie()
-}, [])
+  }, [])
 
   const przefiltrowaneZdjecia =
     wybranaKategoria === 'wszystkie'
@@ -54,6 +59,31 @@ function App() {
       )
     )
   }
+
+  if (ladowanie) {
+  return (
+    <div className="text-center py-5">
+      <div className="spinner-border text-primary" role="status"></div>
+      <p className="mt-3">Ładowanie galerii...</p>
+    </div>
+  )
+}
+
+if (bladDanych) {
+  return (
+    <div className="alert alert-danger m-4">
+      Nie udało się pobrać zdjęć: {bladDanych}
+    </div>
+  )
+}
+
+if (listaZdjec.length === 0) {
+  return (
+    <div className="alert alert-secondary m-4">
+      Katalog jest na razie pusty.
+    </div>
+  )
+}
 
   return (
     <>
