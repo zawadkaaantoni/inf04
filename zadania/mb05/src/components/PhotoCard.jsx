@@ -1,33 +1,81 @@
-const CATEGORY_MAP = {
-  gory: { label: 'Góry', badgeClass: 'text-bg-success' },
-  morze: { label: 'Morze', badgeClass: 'text-bg-primary' },
-  miasto: { label: 'Miasto', badgeClass: 'text-bg-dark' },
+import { Link } from 'react-router-dom'
+
+const nazwyKategorii = {
+  gory: 'Góry',
+  morze: 'Morze',
+  miasto: 'Miasto'
 }
 
-function PhotoCard({ id, title, description, category, image, alt }) {
-  const categoryInfo = CATEGORY_MAP[category] || { label: category, badgeClass: 'text-bg-secondary' }
+const kolory = {
+  gory: 'success',
+  morze: 'info',
+  miasto: 'secondary'
+}
 
+function PhotoCard({
+  id,
+  title,
+  description,
+  category,
+  image,
+  alt,
+  favorite,
+  onUsun,
+  onPrzelacz
+}) {
   return (
-    <div className="card h-100 shadow-sm">
-      <img src={image} className="card-img-top" alt={alt} />
+    <article className="card h-100 border-0 shadow">
+      <img
+        src={image}
+        className="card-img-top"
+        alt={alt}
+      />
+
       <div className="card-body d-flex flex-column">
-        <h3 className="card-title h5">{title}</h3>
-        <p>
-          <span className={`badge ${categoryInfo.badgeClass}`}>
-            {categoryInfo.label}
+        <div className="d-flex justify-content-between align-items-start mb-2">
+          <h3 className="card-title fs-5">{title}</h3>
+
+          <button
+            type="button"
+            className="btn btn-light border rounded-circle"
+            onClick={onPrzelacz}
+            aria-label={favorite ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'}
+            aria-pressed={Boolean(favorite)}
+          >
+            <span className={favorite ? 'text-warning' : 'text-secondary'}>
+              {favorite ? '★' : '☆'}
+            </span>
+          </button>
+        </div>
+
+        <div className="mb-3">
+          <span className={`badge bg-${kolory[category] || 'secondary'}`}>
+            {nazwyKategorii[category] || category}
           </span>
+        </div>
+
+        <p className="card-text text-muted flex-grow-1">
+          {description}
         </p>
-        <p className="card-text text-body-secondary">{description}</p>
-        <button
-          type="button"
-          className="btn btn-outline-primary mt-auto"
-          data-bs-toggle="modal"
-          data-bs-target={`#zdjecie${id}`}
-        >
-          Powiększ
-        </button>
+
+        <div className="d-flex gap-2">
+          <Link
+            to={`/zdjecie/${id}`}
+            className="btn btn-primary flex-grow-1"
+          >
+            Zobacz zdjęcie
+          </Link>
+
+          <button
+            type="button"
+            className="btn btn-outline-danger"
+            onClick={onUsun}
+          >
+            Usuń
+          </button>
+        </div>
       </div>
-    </div>
+    </article>
   )
 }
 
