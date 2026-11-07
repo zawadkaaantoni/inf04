@@ -1,21 +1,24 @@
-function CategoryBar() {
-  const categoriesList = [
-    { label: 'Wszystkie', active: true },
-    { label: 'Góry', active: false },
-    { label: 'Morze', active: false },
-    { label: 'Miasto', active: false },
-  ]
+const opcje = [
+  { id: 'wszystkie', tekst: 'Wszystkie zdjęcia' },
+  { id: 'gory', tekst: 'Góry' },
+  { id: 'morze', tekst: 'Morze' },
+  { id: 'miasto', tekst: 'Miasto' }
+]
 
+function CategoryBar({ aktywna, onWybierz }) {
   return (
-    <div id="kategorie" className="d-flex flex-wrap gap-2 mb-4">
-      {categoriesList.map((item, index) => (
+    <div id="kategorie" className="d-flex flex-wrap gap-3 mb-4">
+      {opcje.map((opcja) => (
         <button
-          key={index}
+          key={opcja.id}
           type="button"
-          className={`btn ${item.active ? 'btn-primary' : 'btn-outline-primary'}`}
-          aria-pressed={item.active}
+          className={`btn rounded-pill ${
+            aktywna === opcja.id ? 'btn-primary' : 'btn-outline-secondary'
+          }`}
+          onClick={() => onWybierz(opcja.id)}
+          aria-pressed={aktywna === opcja.id}
         >
-          {item.label}
+          {opcja.tekst}
         </button>
       ))}
     </div>
